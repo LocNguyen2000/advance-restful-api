@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "631f26f497af73ab2405c455"
+  },
+  "employeeNumber": 1,
+  "lastName": "Nguyen",
+  "firstName": "Loc",
+  "extension": "abc",
+  "email": "LocNH16@gmail.com",
+  "officeCode": "195",
+  "reportsTo": 1,
+  "jobTitle": "Leader"
+},{
+  "_id": {
+    "$oid": "631f272597af73ab2405c457"
+  },
+  "employeeNumber": 3,
+  "lastName": "Nguyen",
+  "firstName": "Tien",
+  "extension": "abc",
+  "email": "TienNT14@gmail.com",
+  "officeCode": "123",
+  "reportsTo": 1,
+  "jobTitle": "President"
+},{
+  "_id": {
+    "$oid": "631f2b21ad49dbd7e624fe72"
+  },
+  "employeeNumber": 4,
+  "firstName": "Khai",
+  "lastName": "Truong",
+  "extension": "abc",
+  "email": "KhaiTQ15@gmail.com",
+  "officeCode": "123",
+  "reportsTo": 1,
+  "jobTitle": "Staff",
+  "__v": 0
+}]

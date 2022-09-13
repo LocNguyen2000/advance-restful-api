@@ -1,0 +1,616 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "NodeJS Unit2 Excercise by LocNH12",
+        "version": "0.0.1",
+        "description": "NodeJS Express MongoDB API Documentation",
+        "contact": {
+            "name": "Nguyen Huu Loc",
+            "email": "LocNH12@fpt.com.vn"
+        }
+    },
+    "host": "http://localhost:4000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users to login and register in the system"
+        },
+        {
+            "name": "Customers",
+            "description": "CRUD for customers in the system"
+        },
+        {
+            "name": "Employees",
+            "description": "CRUD for employees in the system"
+        }
+    ],
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add a new user in the system",
+                "responses": {
+                    "200": {
+                        "description": "Register successfully"
+                    },
+                    "500": {
+                        "description": "Server error. Contact developers to resolve issues"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "username": "LocNH12",
+                                        "password": "1234a@",
+                                        "employeeNumber": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Authenticate and authorize a user into system",
+                "responses": {
+                    "200": {
+                        "description": "Login successfully. Return a token"
+                    },
+                    "400": {
+                        "description": "User account not found"
+                    },
+                    "401": {
+                        "description": "Account or password are incorrect"
+                    },
+                    "500": {
+                        "description": "Server error. Contact developers to resolve issues"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "username": "LocNH12",
+                                        "password": "123456",
+                                        "employeeNumber": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customers": {
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Add a new customer into system",
+                "responses": {
+                    "201": {
+                        "description": "Create new customer succesfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    },
+                    "400": {
+                        "description": "Bad request error"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Customers"
+                                }
+                            },
+                            "example":{
+                                "customerNumber": 1,
+                                "customerName": "Nguyen Van A",
+                                "contactLastName": "Nguyen",
+                                "contactFirstName": "Van A",
+                                "phone": "12345678",
+                                "addressLine1": "addressLine1",
+                                "addressLine2": "addressLine2",
+                                "city": "Hanoi",
+                                "state": "Cau Giay",
+                                "postalCode": "12345",
+                                "country": "Viet Nam",
+                                "salesRepEmployeeNumber": 1
+                              }
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Get a user by id",
+                "parameters": [
+                    {   
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string",
+                            "required": true,
+                            "description": "Object Id of the user to get"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user successfully. Return customer data"
+                    },
+                    "204": {
+                        "description": "Customer not found"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Customers"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Update a user by id",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema": {
+                        "type": "ObjectId",
+                        "required": true,
+                        "description": "Object Id of the user to get"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Update user successfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Customers"
+                                }
+                            },
+                            "example":{
+
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customers"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Delete a user by id",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema": {
+                        "type": "ObjectId",
+                        "required": true,
+                        "description": "Object Id of the user to get"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Delete user successfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                }
+            }
+        },
+        "/employees": {
+            "post": {
+                "tags": [
+                    "Employees"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Add a new employee into system",
+                "responses": {
+                    "201": {
+                        "description": "Create new employee succesfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    },
+                    "400": {
+                        "description": "Bad request error"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            },
+                            "example":{
+                                "employeeNumber": 6,
+                                "lastName": "Nguyen",
+                                "firstName": "Loc",
+                                "extension": "abc",
+                                "email": "LocNH16@gmail.com",
+                                "officeCode": "123",
+                                "reportsTo": 1,
+                                "jobTitle": "Leader"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/employees/{id}": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Get a user by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string",
+                            "required": true,
+                            "description": "Object Id of the user to get"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user successfully. Return customer data"
+                    },
+                    "204": {
+                        "description": "Customer not found"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Employees"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Update a user by id",
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "schema": {
+                        "type": "string",
+                        "required": true,
+                        "description": "Object Id of the user to get"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Update user successfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "item": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            },
+                            "example":{
+                                "employeeNumber": 1,
+                                "lastName": "Nguyen",
+                                "firstName": "Loc",
+                                "extension": "abc",
+                                "email": "LocNH16@gmail.com",
+                                "officeCode": "195",
+                                "reportsTo": 1,
+                                "jobTitle": "Leader"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Employees"
+                ],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "summary": "Delete a user by id",
+                "parameters": [
+                    {
+                    "in": "path",
+                    "name": "id",
+                    "schema": {
+                        "type": "string",
+                        "required": true,
+                        "description": "Object Id of the user to get"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Delete user successfully"
+                    },
+                    "403": {
+                        "description": "User authorization privileges issues"
+                    }
+                }
+            }
+        }
+
+    },
+    "components": {
+        "schemas": {
+            "Users": {
+                "description": "",
+                "type": "object",
+                "required": [
+                    "_id",
+                    "username",
+                    "password",
+                    "employeeNumber"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Primary Key of the table"
+                    },
+                    "username": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "nullable": false
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 6,
+                        "maxLength": 100,
+                        "nullable": false,
+                        "description": "Contain at least 1 number and 1 special character"
+                    },
+                    "employeeNumber": {
+                        "type": "number",
+                        "minimum": 1,
+                        "nullable": false
+                    }
+                }
+            },
+            "Customers": {
+                "description": "",
+                "type": "object",
+                "required": [
+                    "_id",
+                    "customerNumber",
+                    "customerName",
+                    "contactLastName",
+                    "contactFirstName",
+                    "phone",
+                    "addressLine1",
+                    "city",
+                    "country",
+                    "saleRepEmployeeNumber"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Primary Key of the table"
+                    },
+                    "customerNumber": {
+                        "type": "number",
+                        "nullable": false,
+                        "minimum": 1,
+                        "description": "Not updatable field"
+                    },
+                    "customerName": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 50
+                    },
+                    "contactLastName": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 50,
+                        "nullable": false
+                    },
+                    "contactFirstName": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 50,
+                        "nullable": false
+                    },
+                    "phone": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 20,
+                        "nullable": false
+                    },
+                    "addressLine1": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 50,
+                        "nullable": false
+                    },
+                    "addressLine2": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 50,
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 50,
+                        "nullable": false
+                    },
+                    "state": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 50,
+                        "nullable": true
+                    },
+                    "postalCode": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 15,
+                        "nullable": true
+                    },
+                    "country": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 50,
+                        "nullable": false
+                    },
+                    "saleRepEmployeeNumber": {
+                        "type": "number",
+                        "minimum": 1,
+                        "nullable": true
+                    },
+                    "creditLimit": {
+                        "type": "number",
+                        "maximum": 9999999999,
+                        "multipleOf": 0.01,
+                        "nullable": true
+                    }
+                }
+            },
+            "Employees": {
+                "description": "",
+                "type": "object",
+                "required": [
+                    "_id",
+                    "employeeNumber",
+                    "lastName",
+                    "firstName",
+                    "reportsTo",
+                    "officeCode",
+                    "email",
+                    "extension",
+                    "jobTitle"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Primary Key of the table"
+                    },
+                    "employeeNumber":{
+                        "type": "number"
+                    },
+                    "lastName":{
+                        "type": "string"
+                    },
+                    "firstName":{
+                        "type": "string"
+                    } ,
+                    "extension":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string"
+                    },
+                    "officeCode":{
+                        "type": "string"
+                    },
+                    "reportsTo":{
+                        "type": "number"
+                    },
+                    "jobTitle": {
+                        "type": "string",
+                        "enum":[ "President", "Manager", "Leader", "Staff"]
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
